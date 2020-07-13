@@ -1,14 +1,18 @@
 package gui;
 
 import gui.util.Alerts;
+import gui.util.Constraints;
+import java.net.URL;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class ViewController {
+public class ViewController implements Initializable {
 
     @FXML
     private TextField txtNumber1;
@@ -33,10 +37,22 @@ public class ViewController {
             double sum = number1 + number2;
 
             labelResult.setText(String.format("%.2f", sum));
-        }
-        catch  (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             Alerts.showAlert("Error", "Parse error", e.getMessage(), Alert.AlertType.ERROR);
         }
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        //ONLY DOUBLE NUMS
+        Constraints.setTextFieldDouble(txtNumber1);
+        Constraints.setTextFieldDouble(txtNumber2);
+
+        // ONLY 12 CHAR FOR TXTNUMBERS
+        Constraints.setTextFieldMaxLength(txtNumber1, 12);
+        Constraints.setTextFieldMaxLength(txtNumber2, 12);
 
     }
 }
